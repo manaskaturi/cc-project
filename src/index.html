@@ -1,17 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Add your CSS stylesheets here -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <main>
-    <h1> CC PROJECT1 </h1>
-  </main>
-</body>
+    <div class="login-container">
+        <h1>Welcome to Our Application</h1>
+        <p>Please sign in or sign up to continue</p>
+        <div class="button-container">
+            <button onclick="signIn()">Sign In</button>
+            <button onclick="signUp()">Sign Up</button>
+        </div>
+    </div>
+    
+    <!-- Add your JavaScript code here -->
+    <script>
+        const azureConfig = {
+            auth: {
+                clientId: '4947e42d-fd2e-4cb7-93d3-f9da54d3b951',
+                authority: 'https://Cuorg18.b2clogin.com/Cuorg18.onmicrosoft.com/B2C_1_signin_signup/oauth2/v2.0/authorize',
+                redirectUri: 'https://green-grass-030ff3910.5.azurestaticapps.net/', // Replace with your redirect URI
+            }
+        };
 
+        const msalConfig = {
+            auth: {
+                clientId: azureConfig.auth.clientId,
+                authority: azureConfig.auth.authority,
+                redirectUri: azureConfig.auth.redirectUri,
+            }
+        };
+
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        async function signIn() {
+            try {
+                const authResult = await msalInstance.loginPopup();
+                console.log('Authentication successful:', authResult);
+                // Handle successful sign-in
+            } catch (error) {
+                console.error('Authentication failed:', error);
+                // Handle authentication error
+            }
+        }
+
+        async function signUp() {
+            try {
+                const authResult = await msalInstance.loginPopup();
+                console.log('Sign-up successful:', authResult);
+                // Handle successful sign-up
+            } catch (error) {
+                console.error('Sign-up failed:', error);
+                // Handle sign-up error
+            }
+        }
+    </script>
+</body>
 </html>
