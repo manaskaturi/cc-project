@@ -19,12 +19,13 @@
     </div>
     
     <!-- Add your JavaScript code here -->
+    <script src="https://alcdn.msauth.net/browser/2.16.0/js/msal-browser.min.js" integrity="sha384-yX5LqBYY0aC+aHLvVRVn8z5Dv0O2R1zNkmHs5AZW8yW6z5AZW8yW6nQGzNGUa3QD" crossorigin="anonymous"></script>
     <script>
         const azureConfig = {
             auth: {
-                clientId: '4947e42d-fd2e-4cb7-93d3-f9da54d3b951',
+                clientId: 'YOUR_CLIENT_ID',
                 authority: 'https://Cuorg18.b2clogin.com/Cuorg18.onmicrosoft.com/B2C_1_signin_signup/oauth2/v2.0/authorize',
-                redirectUri: 'https://green-grass-030ff3910.5.azurestaticapps.net/', // Replace with your redirect URI
+                redirectUri: 'http://localhost:3000', // Replace with your redirect URI
             }
         };
 
