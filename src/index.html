@@ -1,65 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <!-- Add your CSS stylesheets here -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png" />
+    <title>Aircheck | AQI & More</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/css/autoComplete.min.css">
+    <link rel="stylesheet" href="assets/styles/loader-style.css">
+    <link rel="stylesheet" href="assets/styles/style.css">
 </head>
+
 <body>
-    <div class="login-container">
-        <h1>Welcome to Our Application</h1>
-        <p>Please sign in or sign up to continue</p>
-        <div class="button-container">
-            <button onclick="signIn()"><a href="https://Cuorg18.b2clogin.com/Cuorg18.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_signin_signup&client_id=4947e42d-fd2e-4cb7-93d3-f9da54d3b951&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fgreen-grass-030ff3910.5.azurestaticapps.net%2F&scope=openid&response_type=code&prompt=login">Sign In</a></button>
-            <button onclick="signUp()">Sign Up</button>
+    <main>
+
+        <div id="init-wrapper">
+            <iframe id="init-bg" src="https://giphy.com/embed/3o7WIB00yXujVt4WEo" width="480" height="480"
+                frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
         </div>
-    </div>
-    
-    <!-- Add your JavaScript code here -->
-    <script src="https://alcdn.msauth.net/browser/2.16.0/js/msal-browser.min.js" integrity="sha384-yX5LqBYY0aC+aHLvVRVn8z5Dv0O2R1zNkmHs5AZW8yW6z5AZW8yW6nQGzNGUa3QD" crossorigin="anonymous"></script>
-    <script>
-        const azureConfig = {
-            auth: {
-                clientId: '4947e42d-fd2e-4cb7-93d3-f9da54d3b951',
-                authority: 'https://Cuorg18.b2clogin.com/Cuorg18.onmicrosoft.com/B2C_1_signin_signup/oauth2/v2.0/authorize',
-                redirectUri: 'https://green-grass-030ff3910.5.azurestaticapps.net/', // Replace with your redirect URI
-            }
-        };
+        <!-- City input -->
+        <div id="user-info-card-wrapper">
+            <div class="card" id="city-card">
+                <span class="step-marker red"> STEP 1 </span>
+                <!-- <label for=""> City Name </label> -->
+                <!-- more info along label-->
+                <!-- <img src="assets/info.png" alt="" style="height: 15px; align-self: center; margin-left: 10px;"> -->
+                <div class="info-field-container">
+                    <input type="text" name="" id="city-name" placeholder="Enter city here"
+                        onchange="getCityName(this.value)" onkeydown="checkLength('city-name')">
+                    <img class="next-step-img" src="assets/images/arrow.png" alt="" srcset=""
+                        onclick="showNextCard('city-name')">
+                </div>
 
-        const msalConfig = {
-            auth: {
-                clientId: azureConfig.auth.clientId,
-                authority: azureConfig.auth.authority,
-                redirectUri: azureConfig.auth.redirectUri,
-            }
-        };
+            </div>
 
-        const msalInstance = new msal.PublicClientApplication(msalConfig);
+            <!-- State input -->
+            <div class="card" id="state-card">
+                <span class="step-marker yellow"> STEP 2 </span>
+                <div class="info-field-container">
+                    <input type="text" name="" id="state-name" onkeydown="checkLength('state-name')"
+                        placeholder="Enter state here" onchange="getStateName(this.value)">
+                    <img class="next-step-img" src="assets/images/arrow.png" alt="" srcset=""
+                        onclick="showNextCard('state-name')">
+                </div>
 
-        async function signIn() {
-            try {
-                const authResult = await msalInstance.loginPopup();
-                console.log('Authentication successful:', authResult);
-                // Handle successful sign-in
-            } catch (error) {
-                console.error('Authentication failed:', error);
-                // Handle authentication error
-            }
-        }
+            </div>
 
-        async function signUp() {
-            try {
-                const authResult = await msalInstance.loginPopup();
-                console.log('Sign-up successful:', authResult);
-                // Handle successful sign-up
-            } catch (error) {
-                console.error('Sign-up failed:', error);
-                // Handle sign-up error
-            }
-        }
-    </script>
+            <!-- Country input -->
+
+            <div class="card" id="country-card">
+                <span class="step-marker green"> STEP 3 </span>
+                <div class="info-field-container">
+                    <input type="text" name="" id="country-name" onkeydown="checkLength('country-name')" placeholder="Enter country here"
+                        onchange="getCountryName(this.value)">
+                    <img class="next-step-img" src="assets/images/checkmark.png" alt="" srcset="" onclick="getResult()">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="result-card-wrapper">
+            <div class="card" id="result-card">
+                <div class="card-header">
+                    <h1> Air Check </h1>
+                    <span class="separator">
+                        &#9679;
+                    </span>
+                    <h4>
+                        Air quality stats and more
+                    </h4>
+                    <h4 id="version-info">
+                        version <b>1.0</b>
+                    </h4>
+                </div>
+                <div id="loader-wrapper">
+                    <div class="loading">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="card-body" id="_stats">
+
+                    <p style="width: 100%;">
+                        Stats will be shown here, kindly follow the steps above for the same.
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- scripts -->
+    <script src="assets/scripts/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
 </body>
+
 </html>
