@@ -1,5 +1,5 @@
 // API key
-const API_KEY = '1bdadfc9d804abc0714be16f00a8482f'; // Replace 'YOUR_API_KEY_HERE' with your actual API key
+const API_KEY = '111a1e9d-7157-4d90-986e-4de9153adfe3'; // Replace 'YOUR_AIRVISUAL_API_KEY' with your actual AirVisual API key
 
 let city = '';
 let state = '';
@@ -55,13 +55,13 @@ function checkLength(id) {
 function getResult() {
     STATS.style.display = 'none';
     loader.style.display = 'flex';
-    url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&appid=${API_KEY}&units=metric`;
+    url = `https://api.airvisual.com/v2/city?city=${city}&state=${state}&country=${country}&key=${API_KEY}`;
     fetch(url)
         .then((response) => {
-            if(response.status == '200') {
+            if(response.ok) {
                 return response.json();
             } else {
-                return 'Error';
+                throw new Error('Failed to fetch');
             }
         })
         .then((json) => {
@@ -93,32 +93,25 @@ function renderResult(status, data) {
 function successCard(data) {
     STATS.innerHTML = `
     <div class="stat-card">
-    <h1>${data.name}</h1>
+    <h1>${data.data.city}</h1>
     <span class="separator">
         &#9679;
     </span>
     <h4>City</h4>
     </div>
     <div class="stat-card">
-    <h1>${data.main.temp} &#176;C</h1>
+    <h1>${data.data.current.pollution.aqius}</h1>
     <span class="separator">
         &#9679;
     </span>
-    <h4>Temperature</h4>
+    <h4>AQI (US)</h4>
     </div>
     <div class="stat-card">
-    <h1>${data.main.humidity}%</h1>
+    <h1>${data.data.current.pollution.mainus}</h1>
     <span class="separator">
         &#9679;
     </span>
-    <h4>Humidity</h4>
-    </div>
-    <div class="stat-card">
-    <h1>${data.wind.speed}m/s</h1>
-    <span class="separator">
-        &#9679;
-    </span>
-    <h4>Wind speed</h4>
+    <h4>Main Pollutant (US)</h4>
     </div>
     `;
 }
