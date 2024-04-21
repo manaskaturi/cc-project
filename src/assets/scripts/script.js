@@ -1,5 +1,5 @@
 // API key
-const API_KEY = '1bdadfc9d804abc0714be16f00a8482f'; // Replace 'YOUR_API_KEY_HERE' with your actual API key
+const API_KEY = 'bcdb4341a20119fd79d4d9323e6ddd48'; // Replace 'YOUR_API_KEY_HERE' with your actual API key
 
 let city = '';
 let state = '';
